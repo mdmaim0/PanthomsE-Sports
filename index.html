@@ -7,175 +7,607 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary-cyan: #00f5ff;
+      --primary-purple: #8b5cf6;
+      --primary-pink: #ec4899;
+      --dark-bg: #0a0a0f;
+      --card-bg: #1a1a2e;
+      --accent-gold: #ffd700;
+      --text-light: #e2e8f0;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #1a1a2e;
-      color: #e0e0e0;
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-light);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    .neon-text {
-      text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 40px #00e5ff;
-    }
-
-    .container-glow {
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), 0 0 30px rgba(0, 229, 255, 0.3);
-      border: 1px solid rgba(0, 229, 255, 0.5);
-    }
-
-    .btn-3d {
-      position: relative;
-      border: none;
-      color: white;
-      padding: 12px 28px;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-    }
-
-    .btn-3d:before {
-      content: "";
-      position: absolute;
-      top: 4px;
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 8px;
-      transition: all 0.2s ease-in-out;
       z-index: -1;
+      background: linear-gradient(45deg, #0a0a0f, #1a1a2e, #16213e);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
     }
 
-    .btn-3d:active {
-      top: 2px;
-    }
-    
-    .btn-3d.green { background: #28a745; }
-    .btn-3d.green:before { background: #1f7a35; }
-    .btn-3d.red { background: #dc3545; }
-    .btn-3d.red:before { background: #a71d2a; }
-    .btn-3d.yellow { background: #ffc107; color: #1a1a2e; }
-    .btn-3d.yellow:before { background: #d39e00; }
-    .btn-3d.blue { background: #007bff; }
-    .btn-3d.blue:before { background: #0056b3; }
-    
-    .btn-3d:active:before {
-        top: 2px;
+    .animated-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
     }
 
-    /* === 3D নিয়ন ইনপুট বক্সের স্টাইল === */
-    input[type="text"]:not([disabled]), input[type="tel"] {
-        background-color: transparent;
-        border: 2px solid #00e5ff;
-        color: #e0e0e0;
-        transition: all 0.3s ease;
-        border-radius: 8px;
-        box-shadow: 0 0 8px rgba(0, 229, 255, 0.6), 
-                    inset 0 0 8px rgba(0, 229, 255, 0.4);
-        text-shadow: 0 0 4px rgba(224, 224, 224, 0.5);
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
-    input[type="text"]:not([disabled]):focus, input[type="tel"]:focus {
-        outline: none;
-        box-shadow: 0 0 15px #00e5ff, 
-                    0 0 25px rgba(0, 229, 255, 0.8),
-                    inset 0 0 10px rgba(0, 229, 255, 0.6);
-        transform: scale(1.02);
-    }
-    
-    input::placeholder {
-        color: #bbdefb; /* হালকা নীল placeholder */
-        opacity: 0.7;
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(1deg); }
+      66% { transform: translateY(10px) rotate(-1deg); }
     }
 
+    /* Header Styles */
+    .hero-section {
+      position: relative;
+      padding: 4rem 0;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(139, 92, 246, 0.1));
+      border-bottom: 1px solid rgba(0, 245, 255, 0.3);
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple), var(--primary-pink));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite;
+      text-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    /* Countdown Timer */
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      background: rgba(26, 26, 46, 0.8);
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      min-width: 80px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .countdown-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 245, 255, 0.3);
+    }
+
+    .countdown-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-cyan);
+      display: block;
+    }
+
+    .countdown-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 0 1rem;
+    }
+
+    .form-card {
+      background: rgba(26, 26, 46, 0.9);
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      border-radius: 20px;
+      padding: 3rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+    }
+
+    .form-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-cyan);
+      text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(0, 245, 255, 0.3);
+      border-radius: 12px;
+      color: var(--text-light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-cyan);
+      box-shadow: 
+        0 0 0 3px rgba(0, 245, 255, 0.1),
+        0 0 20px rgba(0, 245, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-input:disabled {
+      background: rgba(0, 0, 0, 0.5);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    /* Player Grid */
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Warning Box */
+    .warning-box {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 193, 7, 0.1));
+      border: 1px solid var(--accent-gold);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .warning-box::before {
+      content: '⚠️';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: var(--card-bg);
+      padding: 0 10px;
+      font-size: 1.5rem;
+    }
+
+    .warning-title {
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .warning-text {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+      color: white;
+      box-shadow: 0 10px 25px rgba(0, 245, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 245, 255, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-success:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, var(--accent-gold), #f59e0b);
+      color: var(--dark-bg);
+      box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+    }
+
+    .btn-warning:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Button Container */
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .submit-container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 3rem 0;
+      border-top: 1px solid rgba(0, 245, 255, 0.2);
+      margin-top: 4rem;
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .footer-highlight {
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .form-card {
+        padding: 2rem 1.5rem;
+        margin: 2rem 1rem;
+      }
+      
+      .hero-section {
+        padding: 2rem 0;
+      }
+      
+      .countdown-container {
+        gap: 0.5rem;
+      }
+      
+      .countdown-item {
+        padding: 0.75rem;
+        min-width: 70px;
+      }
+      
+      .countdown-number {
+        font-size: 1.5rem;
+      }
+      
+      .button-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(0, 245, 255, 0.3);
+      border-top: 3px solid var(--primary-cyan);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Success Animation */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .success-animation {
+      animation: pulse 0.6s ease-in-out;
+    }
   </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
 
-  <!-- Header -->
-  <header class="container mx-auto py-12 text-center">
-    <h1 class="text-4xl md:text-5xl font-bold neon-text mt-4">Panthoms E-Sports - Free Fire Tournament</h1>
-    <p class="text-lg mt-4">Registration শেষ হওয়ার সময়: <span id="countdown" class="font-bold text-2xl neon-text"></span></p>
+  <!-- Loading Overlay -->
+  <div class="loading" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container mx-auto px-4">
+      <h1 class="hero-title">
+        <i class="fas fa-gamepad"></i>
+        Panthoms E-Sports
+      </h1>
+      <p class="hero-subtitle">Free Fire Tournament - Squad Registration</p>
+      
+      <!-- Countdown Timer -->
+      <div class="countdown-container" id="countdownContainer">
+        <div class="countdown-item">
+          <span class="countdown-number" id="days">00</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="hours">00</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="minutes">00</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="seconds">00</span>
+          <span class="countdown-label">Seconds</span>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <!-- Form Section -->
-  <section class="container mx-auto mt-8 p-8 bg-gray-800 rounded-lg container-glow">
-    <h2 class="text-2xl font-semibold mb-6 text-center neon-text">Squad Registration Form</h2>
-    <form id="registrationForm">
-
-      <div class="mb-4">
-        <label for="teamName" class="block text-gray-300 text-sm font-bold mb-2">Team/Player এর নাম:</label>
-        <input type="text" id="teamName" name="teamName" required
-          class="w-full py-3 px-4">
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-300 text-sm font-bold mb-2">Match টাইপ:</label>
-        <input type="text" value="Squad" disabled
-          class="w-full py-3 px-4 text-gray-400 bg-gray-700 cursor-not-allowed rounded-lg border border-gray-600">
-      </div>
-
-      <div id="playerNames" class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" name="playerName1" placeholder="Player 1 এর নাম" required class="w-full py-3 px-4">
-        <input type="text" name="playerName2" placeholder="Player 2 এর নাম" required class="w-full py-3 px-4">
-        <input type="text" name="playerName3" placeholder="Player 3 এর নাম" required class="w-full py-3 px-4">
-        <input type="text" name="playerName4" placeholder="Player 4 এর নাম" required class="w-full py-3 px-4">
-      </div>
-
-      <div class="mb-4">
-        <label for="uid" class="block text-gray-300 text-sm font-bold mb-2">UID:</label>
-        <input type="text" id="uid" name="uid" required class="w-full py-3 px-4">
-      </div>
-
-      <div class="mb-4">
-        <label for="mobileNumber" class="block text-gray-300 text-sm font-bold mb-2">মোবাইল নাম্বার:</label>
-        <input type="tel" id="mobileNumber" name="mobileNumber" required class="w-full py-3 px-4">
-      </div>
-
-      <div class="mb-6 text-yellow-300 bg-yellow-900 bg-opacity-30 p-4 rounded-lg border border-yellow-500">
-        <p class="font-bold">⚠️ মনোযোগ দিন:</p>
-        <p> অবশ্যই আপনার স্কোয়াড এর ৪ জন প্লেয়ার  </p> আমাদের WhatsApp Community  জয়েন করতে হবে </p> এবং YouTube চ্যানেলটি সাবস্ক্রাইব করে </p> সব গুলো স্ক্রিনশট ও আপনার নাম্বার একসাথে পাঠাতে হবে।</p> যদি এগুলো না করেন তাহলে আপনার স্কোয়াডকে qualify করা হবে না </p>,ধন্যবাদ❤️  </p>
-      </div>
-
-      <!-- WhatsApp & YouTube Buttons -->
-      <div class="mb-6 flex flex-col md:flex-row gap-4 justify-center items-center">
-        <a href="https://chat.whatsapp.com/K6S3WCvlRrOKYxkgkGrYrh?mode=r_c" target="_blank" class="btn-3d green inline-flex items-center">
-          🟢 WhatsApp Community জয়েন করুন
-        </a>
-        <a href="https://youtube.com/@xthunter5?si=p8AXIqW2GXrzAEnF" target="_blank" class="btn-3d red inline-flex items-center">
-          🔴 YouTube সাবস্ক্রাইব করুন
-        </a>
-      </div>
-
-      <!-- Screenshot Submission via WhatsApp -->
-      <div class="mb-8 text-center">
-         <p class="mb-2">স্ক্রিনশট এবং মোবাইল নাম্বার পাঠাতে নিচের বাটনে ক্লিক করুন:</p>
-        <a href="https://chat.whatsapp.com/CV0KjIpo5EuFy2TPHbKXM7?mode=r_c?text=আমি%20আমার%20স্ক্রিনশট%20এবং%20মোবাইল%20নাম্বার%20পাঠাচ্ছি%20টুর্নামেন্ট%20রেজিস্ট্রেশনের%20জন্য।"
-           target="_blank"
-           class="btn-3d yellow inline-flex items-center">
-          📤 WhatsApp-এ স্ক্রিনশট গুলো পাঠান
-        </a>
-      </div>
+  <!-- Main Form Section -->
+  <main class="form-container">
+    <div class="form-card">
+      <h2 class="form-title">
+        <i class="fas fa-users"></i>
+        Squad Registration
+      </h2>
       
-      <div class="text-center">
-        <button type="submit" class="btn-3d blue w-full md:w-auto">
+      <form id="registrationForm">
+        <!-- Team Name -->
+        <div class="form-group">
+          <label for="teamName" class="form-label">
+            <i class="fas fa-flag"></i>
+            Team/Player এর নাম
+          </label>
+          <input type="text" id="teamName" name="teamName" required class="form-input" placeholder="আপনার টিমের নাম লিখুন">
+        </div>
+
+        <!-- Match Type -->
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-trophy"></i>
+            Match টাইপ
+          </label>
+          <input type="text" value="Squad" disabled class="form-input">
+        </div>
+
+        <!-- Player Names -->
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-user-friends"></i>
+            Player Names
+          </label>
+          <div class="player-grid">
+            <input type="text" name="playerName1" placeholder="Player 1 এর নাম" required class="form-input">
+            <input type="text" name="playerName2" placeholder="Player 2 এর নাম" required class="form-input">
+            <input type="text" name="playerName3" placeholder="Player 3 এর নাম" required class="form-input">
+            <input type="text" name="playerName4" placeholder="Player 4 এর নাম" required class="form-input">
+          </div>
+        </div>
+
+        <!-- UID -->
+        <div class="form-group">
+          <label for="uid" class="form-label">
+            <i class="fas fa-id-card"></i>
+            UID
+          </label>
+          <input type="text" id="uid" name="uid" required class="form-input" placeholder="আপনার Free Fire UID">
+        </div>
+
+        <!-- Mobile Number -->
+        <div class="form-group">
+          <label for="mobileNumber" class="form-label">
+            <i class="fas fa-phone"></i>
+            মোবাইল নাম্বার
+          </label>
+          <input type="tel" id="mobileNumber" name="mobileNumber" required class="form-input" placeholder="আপনার মোবাইল নাম্বার">
+        </div>
+
+        <!-- Warning Box -->
+        <div class="warning-box">
+          <div class="warning-title">মনোযোগ দিন:</div>
+          <div class="warning-text">
+            অবশ্যই আপনার স্কোয়াড এর ৪ জন প্লেয়ার আমাদের WhatsApp Community জয়েন করতে হবে এবং YouTube চ্যানেলটি সাবস্ক্রাইব করে সব গুলো স্ক্রিনশট ও আপনার নাম্বার একসাথে পাঠাতে হবে। যদি এগুলো না করেন তাহলে আপনার স্কোয়াডকে qualify করা হবে না। ধন্যবাদ❤️
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-container">
+          <a href="https://chat.whatsapp.com/K6S3WCvlRrOKYxkgkGrYrh?mode=r_c" target="_blank" class="btn btn-success">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Community জয়েন করুন
+          </a>
+          <a href="https://youtube.com/@xthunter5?si=p8AXIqW2GXrzAEnF" target="_blank" class="btn btn-danger">
+            <i class="fab fa-youtube"></i>
+            YouTube সাবস্ক্রাইব করুন
+          </a>
+        </div>
+
+        <!-- Screenshot Submission -->
+        <div class="text-center">
+          <p class="warning-text mb-4">স্ক্রিনশট এবং মোবাইল নাম্বার পাঠাতে নিচের বাটনে ক্লিক করুন:</p>
+          <a href="https://chat.whatsapp.com/CV0KjIpo5EuFy2TPHbKXM7?mode=r_c?text=আমি%20আমার%20স্ক্রিনশট%20এবং%20মোবাইল%20নাম্বার%20পাঠাচ্ছি%20টুর্নামেন্ট%20রেজিস্ট্রেশনের%20জন্য।" target="_blank" class="btn btn-warning">
+            <i class="fas fa-paper-plane"></i>
+            WhatsApp-এ স্ক্রিনশট গুলো পাঠান
+          </a>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-container">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-rocket"></i>
             Register Now
-        </button>
-      </div>
-    </form>
-  </section>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
 
   <!-- Footer -->
-  <footer class="container mx-auto py-8 text-center">
-    <p class="text-yellow-400">Developed by <span class="font-bold neon-text">XT Maim</span></p>
+  <footer class="footer">
+    <div class="container mx-auto px-4">
+      <p class="footer-text">
+        Developed with <i class="fas fa-heart" style="color: #ef4444;"></i> by 
+        <span class="footer-highlight">XTﾠMꫝɪᴍﾠ!!</span>
+      </p>
+    </div>
   </footer>
 
-  <!-- Countdown Timer -->
+  <!-- Scripts -->
   <script>
-    function countdownTimer() {
+    // Countdown Timer
+    function updateCountdown() {
       const targetDate = new Date("2025-07-19T12:59:59").getTime();
       const now = new Date().getTime();
       const timeLeft = targetDate - now;
@@ -186,18 +618,26 @@
         const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-        document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        document.getElementById("days").textContent = days.toString().padStart(2, '0');
+        document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
       } else {
-        document.getElementById("countdown").innerHTML = "Registration বন্ধ হয়ে গেছে";
+        document.getElementById("countdownContainer").innerHTML = 
+          '<div class="countdown-item" style="grid-column: 1 / -1;"><span class="countdown-number">Registration বন্ধ হয়ে গেছে</span></div>';
       }
     }
-    setInterval(countdownTimer, 1000);
-  </script>
 
-  <!-- Submit to Google Sheet -->
-  <script>
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call
+
+    // Form Submission
     document.getElementById("registrationForm").addEventListener("submit", function (event) {
       event.preventDefault();
+      
+      // Show loading
+      document.getElementById("loadingOverlay").style.display = "flex";
 
       const data = {
         teamName: document.getElementById("teamName").value,
@@ -220,14 +660,48 @@
         },
         body: JSON.stringify(data)
       }).then(() => {
-        alert("Registration Successful! এখন WhatsApp গ্রুপে স্ক্রিনশট ও নাম্বার পাঠান ✅");
+        // Hide loading
+        document.getElementById("loadingOverlay").style.display = "none";
+        
+        // Add success animation
+        document.querySelector(".form-card").classList.add("success-animation");
+        
+        alert("Registration Successful! ✅\n\nএখন WhatsApp গ্রুপে স্ক্রিনশট ও নাম্বার পাঠান।\n\nধন্যবাদ! 🎮");
         document.getElementById("registrationForm").reset();
+        
+        // Remove animation class after animation completes
+        setTimeout(() => {
+          document.querySelector(".form-card").classList.remove("success-animation");
+        }, 600);
       }).catch(error => {
+        // Hide loading
+        document.getElementById("loadingOverlay").style.display = "none";
+        
         console.error("Error:", error);
-        alert("Registration failed.");
+        alert("Registration failed. Please try again.");
+      });
+    });
+
+    // Add smooth scrolling for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add input validation feedback
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('blur', function() {
+        if (this.required && !this.value.trim()) {
+          this.style.borderColor = '#ef4444';
+        } else {
+          this.style.borderColor = 'rgba(0, 245, 255, 0.3)';
+        }
       });
     });
   </script>
-
 </body>
 </html>
